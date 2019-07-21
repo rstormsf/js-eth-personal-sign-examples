@@ -5,11 +5,55 @@ window.Eth = Eth
 console.log('new V2')
 var fs = require('fs')
 var terms = fs.readFileSync(__dirname + '/terms.txt').toString()
-web3MethodsButton.addEventListener('click', function() {
+web3MethodsButton.addEventListener('click', async function() {
+  event.preventDefault()
+  // var params = [msg, from]
+  let ethAccounts, net_version,eth_getBalance
+  try {
+    ethAccounts = await window.ethereum.enable()
+  } catch(e) {
+    ethAccounts = e.message
+  }
+  try {
+    net_version = await new Promise((res, rej) => {
+      window.ethereum.sendAsync({
+        method: 'net_version',
+        params: [],
+        from: ethAccounts[0],
+        jsonrpc: '2.0'
+      }, (err, resp) => {
+        if(err) rej(err)
+        res(resp.result)
+      })
+    })
+  } catch(e) {
+    net_version = e.message
+  }
+
+  try {
+    eth_getBalance = await new Promise((res, rej) => {
+      window.ethereum.sendAsync({
+        method: 'eth_getBalance',
+        params: [ethAccounts[0], 'latest'],
+        from: ethAccounts[0],
+        jsonrpc: '2.0'
+      }, (err, resp) => {
+        if(err) rej(err)
+        res(resp.result)
+      })
+    })
+  } catch(e) {
+    eth_getBalance = e.message
+  }
+  
+  console.log(net_version, ethAccounts)
   window.alert(`
    window.ethereum : ${!!window.ethereum}
    window.ethereum.sendAsync : ${!!window.ethereum.sendAsync}
    window.web3 : ${!!window.web3}
+   window.ethereum.sendAsync(method: net_version) : ${net_version}
+   window.ethereum.enable() return: ${JSON.stringify(ethAccounts)}
+   eth_getBalance: ${eth_getBalance}
   `)
 })
 connectButton.addEventListener('click', function () {
@@ -18,7 +62,7 @@ connectButton.addEventListener('click', function () {
 
 function connect () {
   if (typeof ethereum !== 'undefined') {
-    ethereum.enable()
+    return ethereum.enable()
     .catch(console.error)
   }
 }
