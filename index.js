@@ -5,7 +5,13 @@ window.Eth = Eth
 console.log('new V2')
 var fs = require('fs')
 var terms = fs.readFileSync(__dirname + '/terms.txt').toString()
-
+web3MethodsButton.addEventListener('click', function() {
+  window.alert(`
+   window.ethereum : ${!!window.ethereum}
+   window.ethereum.sendAsync : ${!!window.ethereum.sendAsync}
+   window.web3 : ${!!window.ethereum.web3}
+  `)
+})
 connectButton.addEventListener('click', function () {
   connect()
 })
