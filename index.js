@@ -9,7 +9,7 @@ web3MethodsButton.addEventListener('click', function() {
   window.alert(`
    window.ethereum : ${!!window.ethereum}
    window.ethereum.sendAsync : ${!!window.ethereum.sendAsync}
-   window.web3 : ${!!window.ethereum.web3}
+   window.web3 : ${!!window.web3}
   `)
 })
 connectButton.addEventListener('click', function () {
