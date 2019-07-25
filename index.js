@@ -16,6 +16,9 @@ web3MethodsButton.addEventListener('click', async function() {
   }
   try {
     net_version = await new Promise((res, rej) => {
+      if(!window.etherem && !window.ethereum.sendAsync) {
+        rej('n/a')
+      }
       window.ethereum.sendAsync({
         method: 'net_version',
         params: [],
@@ -32,6 +35,9 @@ web3MethodsButton.addEventListener('click', async function() {
 
   try {
     eth_getBalance = await new Promise((res, rej) => {
+      if(!window.etherem && !window.ethereum.sendAsync) {
+        rej('n/a')
+      }
       window.ethereum.sendAsync({
         method: 'eth_getBalance',
         params: [ethAccounts[0], 'latest'],
@@ -54,6 +60,7 @@ web3MethodsButton.addEventListener('click', async function() {
    window.ethereum.sendAsync(method: net_version) : ${net_version}
    window.ethereum.enable() return: ${JSON.stringify(ethAccounts)}
    eth_getBalance: ${eth_getBalance}
+   userAgent: ${navigator.userAgent}
   `)
 })
 connectButton.addEventListener('click', function () {
