@@ -12,6 +12,7 @@ web3MethodsButton.addEventListener('click', async function() {
   // var params = [msg, from]
   let ethAccounts, net_version,eth_getBalance
   try {
+    if(!window.etherem) throw new Error('no ethereum')
     ethAccounts = await window.ethereum.enable()
   } catch(e) {
     ethAccounts = e.message
