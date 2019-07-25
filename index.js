@@ -51,11 +51,9 @@ web3MethodsButton.addEventListener('click', async function() {
   } catch(e) {
     eth_getBalance = e.message
   }
-  
   console.log(net_version, ethAccounts)
   window.alert(`
    window.ethereum : ${!!window.ethereum}
-   window.ethereum.sendAsync : ${!!window.ethereum.sendAsync}
    window.web3 : ${!!window.web3}
    window.ethereum.sendAsync(method: net_version) : ${net_version}
    window.ethereum.enable() return: ${JSON.stringify(ethAccounts)}
